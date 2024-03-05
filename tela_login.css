@@ -18,8 +18,7 @@ main{
     width: 100%;
     display: flex;
     justify-content: center;
-    align-items: center;
-    
+    align-items: center;  
 }
 
 .container{
@@ -47,8 +46,7 @@ input{
     border-left-style: none;
     border-right-style: none;
     height: 64px;
-    width: 700px;
-    
+    width: 700px;  
 }
 
 .botoes{
