@@ -1,42 +1,36 @@
-async function validarLogin() {
+const button = document.getElementById('login')
 
-    const nome = document.getElementById('nome').value
-    const senha = document.getElementById('senha').value
 
-    console.log(nome)
+const validarLogin = async () => {
+    const email = document.getElementById('nome').value
+    const password = document.getElementById('senha').value
 
-    if (nome == '' || senha == '') {
-        alert('Todos os campos são obrigatórios.')
-        return false
-    }
+    const urlLogin = 'https://back-login.vercel.app/usuarios'
 
-    try{
-        const users = await fetch('http://localhost:8080/usuario')
+    const listUsers = await fetch(urlLogin)
 
-        const listUsers = await users.json()
+    const objUsers = await listUsers.json()
 
-        let validaUsuario = false
+    if (email == '' || password == '') {
+        alert('Por Favor preencha todos os campos !!')
+    } else {
 
-        listUsers.forEach((user) => {
-            if (nome === user.nome && senha === user.senha) {
+        let validaUser = false
 
-                alert('Usuário encontrado com sucesso, redirecionando para a página de tarefas.')
+        objUsers.forEach(user => {
 
-                localStorage.setItem("id",user.id)
-                localStorage.setItem("nome",user.nome)
-                localStorage.setItem("premium",user.premium)
-
+            if (user.email == email && user.senha == password) {
+                validaUser = true
                 window.location.href = './home/home.html'
-                validaUsuario = true
             }
-        }) 
+        })
 
-        if (!validaUsuario) {
-            alert('ERRO: Usuário não encontrado.')
+        if (!validaUser) {
+            alert('Por favor verifique o email e senha !!')
         }
-        
-    }catch(error) {
-        alert('ERRO: Não foi possível acessar a API')
-        console.error(error)
     }
 }
+
+button.addEventListener('click', () => {
+    validarLogin()
+})
